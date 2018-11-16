@@ -56,3 +56,5 @@ bindsym XF86MonBrightnessDown exec /usr/bin/xbacklight -dec 10
 bindsym F12 exec --no-startup-id "rofi -show run"
 
 exec --no-startup-id setxkbmap -layout vok
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh

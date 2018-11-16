@@ -27,14 +27,15 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
-[bar/example]
-;monitor = ${env:MONITOR:HDMI-1}
+[bar/primary]
+monitor = ${env:MONITOR:eDP-1}
 width = 100%
 height = 27
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 6.0
 fixed-center = false
+bottom = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -51,29 +52,26 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-0 = Noto Sans:size=10:antialias=true;0				# Main
+font-1 = Noto Sans Symbols:size=10:antialias=true;0		# Emoji + support
+font-2 = Wuncon Siji:antialias=false:pixelsize=8;1		# Symbols (CPU, RAM, etc.)
+font-3 = DejaVu Sans:size=10:antialias=true;0		    # Obsahuje U+2500 :)
 
-modules-left = bspwm i3
+modules-left = i3
 modules-center = 
-modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
+modules-right = xbacklight pulseaudio wlan eth filesystem battery cpu memory temperature date
 
 tray-position = right
 tray-padding = 2
 ;tray-transparent = true
 ;tray-background = #0063ff
 
-;wm-restack = bspwm
-;wm-restack = i3
+wm-restack = i3
 
 ;override-redirect = true
 
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -190,12 +188,12 @@ label = BL
 bar-width = 10
 bar-indicator = |
 bar-indicator-foreground = #fff
-bar-indicator-font = 2
+bar-indicator-font = 4
 bar-fill = ─
-bar-fill-font = 2
+bar-fill-font = 4
 bar-fill-foreground = #9f78e1
 bar-empty = ─
-bar-empty-font = 2
+bar-empty-font = 4
 bar-empty-foreground = ${colors.foreground-alt}
 
 [module/backlight-acpi]
@@ -234,11 +232,12 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
 ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
