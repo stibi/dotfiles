@@ -30,6 +30,10 @@ bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move container to workspace back_and_forth
+bindsym $mod+comma move scratchpad
+bindsym $mod+period scratchpad show
+
+bindsym $mod+k [class="Enpass"] scratchpad show
 
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -80,8 +84,12 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+for_window [class="Enpass"] floating enable
+
 bindsym F12 exec --no-startup-id "rofi -show run"
 
 exec --no-startup-id setxkbmap -layout vok
+exec --no-startup-id enpass -name scratchpad
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
