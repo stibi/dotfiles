@@ -37,6 +37,7 @@ bindsym $mod+comma move scratchpad
 bindsym $mod+period scratchpad show
 
 bindsym $mod+k [class="Enpass"] scratchpad show
+bindsym $mod+Escape [class="(?i)urxvt" instance="scratchpad"] scratchpad show
 
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -89,10 +90,13 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 for_window [class="Enpass"] floating enable
+for_window [class="(?i)urxvt" instance="scratchpad"] move scratchpad
+for_window [class="(?i)urxvt" instance="scratchpad"] border 2pixel
 
 bindsym F12 exec --no-startup-id "rofi -show run"
 
 exec --no-startup-id setxkbmap -layout vok
 exec --no-startup-id enpass -name scratchpad
+exec --no-startup-id urxvt -name scratchpad
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
