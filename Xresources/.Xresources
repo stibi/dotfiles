@@ -1,0 +1,66 @@
+
+!-------------------------------------------------------------------------------
+! Xft settings
+!-------------------------------------------------------------------------------
+
+Xft.autohint:		0
+Xft.lcdfilter:  	lcddefault
+Xft.hintstyle:          hintslight
+Xft.hinting:            1
+Xft.antialias:          1
+Xft.dpi:                96
+Xft.rgba:               rgb
+
+
+!-------------------------------------------------------------------------------
+! URxvt settings
+! Colours lifted from Solarized (http://ethanschoonover.com/solarized)
+! More info at:
+! http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
+!-------------------------------------------------------------------------------
+
+! Make URL links clickable
+URxvt*perl-ext-common: default,matcher
+URxvt*matcher.button: 1
+URxvt*url-launcher: /usr/bin/xdg-open
+
+! ??
+!URxvt*depth:            32
+!URxvt.geometry:         90x30
+URxvt*tintColor: Gray
+! shading - 0 to 99 darkens, 101 to 200 lightens.
+! Dont use with tintColor just use a darker or lighter color instead.
+URxvt*shading: 20
+
+! Fake Transparency
+URxvt.transparent:		true
+
+!URxvt.urgentOnBell:		true
+!URxvt.visualBell:		true
+URxvt.loginShell:		true
+URxvt.saveLines:		12000
+URxvt.internalBorder:		3
+URxvt.lineSpace:		-1
+
+!! Source Code Pro
+!URxvt*font: 			xft:source code pro for powerline:regular:pixelsize=14:antialias=false
+!URxvt*imFont: 			xft:source code pro for powerline:regular:pixelsize=18:antialias=false
+!URxvt*boldFont: 		xft:source code pro for powerline:semibold:pixelsize=18:antialias=false
+!URxvt*italicFont: 		xft:source code pro for powerline:italic:pixelsize=18:antialias=false
+!URxvt*boldItalicFont: 		xft:source code pro for powerline:semibold:italic:pixelsize=18:antialias=false
+!URxvt*letterSpace: 		-2
+
+URxvt*font: xft:Ubuntu Mono:pixelsize=16:antialias=true:hinting=true
+URxvt*boldFont: xft:Ubuntu Mono:bold:pixelsize=16:antialias=true:hinting=true
+
+! Scrollbar
+URxvt.scrollStyle:      rxvt
+URxvt.scrollBar:        false
+
+! Pry kvuli barevnemu manu
+URxvt.colorIT:      #87af5f
+URxvt.colorBD:      #d7d7d7
+URxvt.colorUL:      #87afd7
+
+#include ".Xresources.d/colors.hyper-snazzy"
+
