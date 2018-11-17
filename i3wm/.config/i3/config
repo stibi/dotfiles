@@ -90,6 +90,15 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 for_window [class="Enpass"] floating enable
+for_window [class="transmission"] floating enable
+for_window [class="(?i)vlc"] floating enable
+for_window [class="(?i)arandr"] floating enable
+# Krusader needs a little bit more care
+for_window [title="Copying" class="Krusader"] floating enable
+for_window [title="Copying. " class="Krusader"] floating enable
+for_window [title="Moving" class="Krusader"] floating enable
+for_window [title="Moving. " class="Krusader"] floating enable
+for_window [title="Progress Dialog" class="Krusader"] floating enable
 for_window [class="(?i)urxvt" instance="scratchpad"] move scratchpad
 for_window [class="(?i)urxvt" instance="scratchpad"] border 2pixel
 
