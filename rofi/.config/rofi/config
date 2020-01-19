@@ -1,0 +1,3 @@
+rofi.combi-modi:    window,drun,ssh
+rofi.theme:         glue_pro_blue
+rofi.modi:          combi,ssh,window,run
