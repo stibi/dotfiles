@@ -33,9 +33,9 @@ bindsym $mod+q kill
 
 # change focus
 bindsym $mod+Left focus left
-bindsym $mod+Right focus down
+bindsym $mod+Right focus right
 bindsym $mod+Up focus up
-bindsym $mod+Down focus right
+bindsym $mod+Down focus down
 
 # move focused window
 bindsym $mod+Shift+Left move left
