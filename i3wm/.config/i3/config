@@ -150,4 +150,5 @@ bindsym $mod+r mode "resize"
 bindsym F12 exec --no-startup-id "rofi -show run -config ~/.config/rofi/config.rasi"
 bindsym $mod+k exec --no-startup-id "rofi-pass"
 
+exec --no-startup-id setxkbmap -layout vok
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
