@@ -146,9 +146,15 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# stibiho custom
 
+for_window [class="(?i)alacritty" instance="scratchpad"] move scratchpad
+for_window [class="(?i)alacritty" instance="scratchpad"] border 2pixel
+
+bindsym $mod+Escape [class="(?i)alacritty" instance="scratchpad"] scratchpad show
 bindsym F12 exec --no-startup-id "rofi -show run -config ~/.config/rofi/config.rasi"
 bindsym $mod+k exec --no-startup-id "rofi-pass"
 
 exec --no-startup-id setxkbmap -layout vok
+exec --no-startup-id alacritty --class scratchpad
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
