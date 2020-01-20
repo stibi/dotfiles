@@ -3,6 +3,7 @@ setopt autocd autopushd pushdignoredups
 unsetopt beep
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+export EDITOR=vim
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
