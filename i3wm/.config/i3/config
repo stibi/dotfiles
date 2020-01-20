@@ -151,6 +151,9 @@ bindsym $mod+r mode "resize"
 for_window [class="(?i)alacritty" instance="scratchpad"] move scratchpad
 for_window [class="(?i)alacritty" instance="scratchpad"] border 2pixel
 
+# plavajici okynka
+for_window [class="Yubico Authenticator"] floating enable
+
 bindsym $mod+Escape [class="(?i)alacritty" instance="scratchpad"] scratchpad show
 bindsym F12 exec --no-startup-id "rofi -show run -config ~/.config/rofi/config.rasi"
 bindsym $mod+k exec --no-startup-id "rofi-pass"
