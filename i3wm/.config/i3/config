@@ -159,6 +159,9 @@ bindsym F12 exec --no-startup-id "rofi -show run -config ~/.config/rofi/config.r
 bindsym $mod+k exec --no-startup-id "rofi-pass"
 bindsym $mod+l exec /usr/bin/xsecurelock
 
+bindsym XF86MonBrightnessUp exec /usr/bin/xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec /usr/bin/xbacklight -dec 10
+
 exec --no-startup-id setxkbmap -layout vok
 exec --no-startup-id alacritty --class scratchpad
 exec --no-startup-id xset s 300 5
