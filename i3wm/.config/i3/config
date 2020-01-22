@@ -157,7 +157,10 @@ for_window [class="Yubico Authenticator"] floating enable
 bindsym $mod+Escape [class="(?i)alacritty" instance="scratchpad"] scratchpad show
 bindsym F12 exec --no-startup-id "rofi -show run -config ~/.config/rofi/config.rasi"
 bindsym $mod+k exec --no-startup-id "rofi-pass"
+bindsym $mod+l exec /usr/bin/xsecurelock
 
 exec --no-startup-id setxkbmap -layout vok
 exec --no-startup-id alacritty --class scratchpad
+exec --no-startup-id xset s 300 5
+exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
