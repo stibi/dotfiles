@@ -3,4 +3,5 @@ configuration {
  modi: "combi,ssh,window,run";
  theme: "glue_pro_blue";
  font: "Cascadia Code 12";
+ dpi: 192;
 }

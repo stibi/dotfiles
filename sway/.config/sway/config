@@ -1,3 +1,9 @@
+# Sway config
+
+input "type:keyboard" {
+    xkb_layout vok
+}
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -126,7 +132,7 @@ workspace $ws9 output $external_display
 workspace $ws10 output $external_display
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c exec swaymsg reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -176,7 +182,6 @@ bindsym $mod+l exec /usr/bin/xsecurelock
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
-exec --no-startup-id setxkbmap -layout vok
 exec --no-startup-id alacritty --class scratchpad
 #exec --no-startup-id xset s 300 5
 #exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock
