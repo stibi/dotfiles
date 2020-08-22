@@ -4,6 +4,8 @@ unsetopt beep
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export EDITOR=vim
+export TERMINAL=alacritty
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -38,4 +40,3 @@ if [[ -d ~/.zshrc.d ]]; then
 fi
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-

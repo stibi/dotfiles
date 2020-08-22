@@ -22,3 +22,5 @@ alias genpass='openssl rand -base64 16'
 alias ti='terraform import'
 alias tf='terraform'
 alias tf1='terraform11'
+
+alias ku='kubectl'
