@@ -1,0 +1,77 @@
+[user]
+    name = Martin Stiborský
+    email = martin.stiborsky@gmail.com
+    signingkey = E7B551FD804341A8
+
+[core]
+    editor = vim
+    pager = diff-so-fancy | less --tabs=4 -RFX
+    excludesfile = /home/stibi/.gitignore
+
+[commit]
+    gpgsign = true
+
+[color]
+    status = auto
+    branch = auto
+    ui = true
+
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+
+[color "diff"]
+    meta = 11
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    le = log --oneline --decorate
+    # list of all aliased
+    la = "!git config -l | grep alias | cut -c 7-"
+    co = checkout
+    st = status
+    ci = commit
+    br = branch -v
+    brd = branch -d
+    brdd = branch -D
+    wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\""
+    unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
+    panic = !tar cvf ../git_panic.tar *
+    ahead = log origin/dev..HEAD
+    amend = commit --amend -C HEAD
+    undo = reset --soft HEAD^
+    standup = log --since '1 day ago' --oneline --author martin.stiborsky@gmail.com
+    pu = pull
+    pur = pull --rebase
+    cam = commit -am
+    ca = commit -a
+    cm = commit -m
+    ci = commit
+    ds = diff --staged
+    cob = checkout -b
+    unstage = reset HEAD --
+    k = !gitk
+    g = !git gui
+    h = !git --no-pager log origin/dev..HEAD --abbrev-commit --pretty=oneline
+    pom = !sh -c 'git h && echo Ready to push? ENTER && read && git push origin dev' -
+    verbs = !git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr
+    prstash = "!f() { git fetch $1 refs/pull-requests/$2/from:$3; } ; f"
+    lol = log --graph --pretty=format:\"%C(yellow)%h%Creset%C(cyan)%C(bold)%d%Creset %C(cyan)(%cr)%Creset %C(green)%ce%Creset %s\"
+
+[push]
+    default = simple
+
+[branch]
+    autosetuprebase = always
+
