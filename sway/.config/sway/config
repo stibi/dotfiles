@@ -189,6 +189,7 @@ bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
 exec --no-startup-id alacritty --class scratchpad
-exec --no-startup-id waybar
 #exec --no-startup-id xset s 300 5
 #exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock
+
+include ~/.config/sway/conf.d/*
