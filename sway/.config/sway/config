@@ -165,14 +165,14 @@ bindsym $mod+r mode "resize"
 
 # stibiho custom
 
-for_window [class="(?i)alacritty" instance="scratchpad"] move scratchpad
-for_window [class="(?i)alacritty" instance="scratchpad"] border 2pixel
+for_window [app_id="scratchpad_term"] move scratchpad
+for_window [app_id="scratchpad_term"] border 2pixel
 
 # floating windows
 for_window [class="Yubico Authenticator"] floating enable
 for_window [class="(?i)arandr"] floating enable
 
-bindsym $mod+Escape [class="(?i)alacritty" instance="scratchpad"] scratchpad show
+bindsym $mod+Escape [app_id="scratchpad_term"] scratchpad show
 bindsym F12 exec --no-startup-id "rofi -show run -config ~/.config/rofi/config.rasi"
 bindsym $mod+k exec --no-startup-id "rofi-pass"
 bindsym $mod+l exec /usr/bin/xsecurelock
@@ -180,6 +180,6 @@ bindsym $mod+l exec /usr/bin/xsecurelock
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
-exec --no-startup-id alacritty --class scratchpad
+exec --no-startup-id alacritty --class scratchpad_term
 
 include ~/.config/sway/conf.d/*
