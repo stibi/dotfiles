@@ -1,0 +1,7 @@
+ignore-empty-password
+show-failed-attempts
+show-keyboard-layout
+color=000000
+font=pango:Cascadia Code
+font-size=16
+indicator-radius=100
