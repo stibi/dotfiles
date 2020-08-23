@@ -1,0 +1,1 @@
+bindsym $mod+l exec swaylock
