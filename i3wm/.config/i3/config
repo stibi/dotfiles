@@ -189,6 +189,7 @@ bindsym XF86MonBrightnessDown exec light -U 5
 
 exec --no-startup-id setxkbmap -layout vok
 exec --no-startup-id alacritty --class scratchpad
-#exec --no-startup-id xset s 300 5
-#exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock
+exec --no-startup-id feh --bg-fill /home/stibi/Pictures/wallpapers/stellaris_01.png
+exec --no-startup-id xset s 300 5
+exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
