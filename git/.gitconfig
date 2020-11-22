@@ -75,3 +75,6 @@
 [branch]
     autosetuprebase = always
 
+[includeIf "gitdir:revolgy/"]
+    path = .gitconfig-revolgy
+
