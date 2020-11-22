@@ -2,6 +2,6 @@ configuration {
  combi-modi: "window,drun,ssh";
  modi: "combi,ssh,window,run";
  theme: "glue_pro_blue";
- font: "Cascadia Code 12";
+ font: "TeX Gyre Heros Regular 12";
  dpi: 192;
 }
