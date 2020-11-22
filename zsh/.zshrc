@@ -4,7 +4,7 @@ unsetopt beep
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export EDITOR=vim
-export TERMINAL=alacritty
+export TERM=xterm
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # Use emacs keybindings even if our EDITOR is set to vi
@@ -40,3 +40,11 @@ if [[ -d ~/.zshrc.d ]]; then
 fi
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+PATH="/home/stibi/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/stibi/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/stibi/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/stibi/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/stibi/perl5"; export PERL_MM_OPT;
+
+eval "$(starship init zsh)"
