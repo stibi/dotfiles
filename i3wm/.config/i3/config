@@ -177,6 +177,9 @@ bindsym $mod+l exec /usr/bin/xsecurelock
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
+bindsym $mod+o exec yubikey-oath-dmenu --notify --clipboard clipboard
+bindsym $mod+Shift+o exec yubikey-oath-dmenu --notify --type
+
 exec --no-startup-id setxkbmap -layout vok
 exec --no-startup-id alacritty --class scratchpad
 exec --no-startup-id feh --bg-fill /home/stibi/Pictures/wallpapers/stellaris_01.png
