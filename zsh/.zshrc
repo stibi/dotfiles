@@ -6,6 +6,7 @@ export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export EDITOR=vim
 export TERM=xterm
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+export QT_QPA_PLATFORMTHEME=qt5ct
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
