@@ -89,11 +89,12 @@
 [interactive]
     diffFilter = delta --color-only
 
-[includeIf "gitdir:revolgy/"]
-    path = .gitconfig-revolgy
-
 #[init]
 #	templateDir = /home/stibi/.git-template
 
 [init]
 	defaultBranch = main
+
+[includeIf "gitdir:pb/"]
+    path = .gitconfig-pb
+
