@@ -5,7 +5,8 @@
 
 [core]
     editor = vim
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    #pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta
     excludesfile = /home/stibi/.gitignore
 
 [commit]
@@ -15,6 +16,9 @@
     status = auto
     branch = auto
     ui = true
+
+[diff]
+    colorMoved = default
 
 [color "diff-highlight"]
     oldNormal = red bold
@@ -75,6 +79,21 @@
 [branch]
     autosetuprebase = always
 
+[delta]
+    line-numbers = true
+    side-by-side = true
+    #plus-style = "syntax #012800"
+    #minus-style = "syntax #340001"
+    syntax-theme = OneHalfLight
+
+[interactive]
+    diffFilter = delta --color-only
+
 [includeIf "gitdir:revolgy/"]
     path = .gitconfig-revolgy
 
+#[init]
+#	templateDir = /home/stibi/.git-template
+
+[init]
+	defaultBranch = main
