@@ -48,4 +48,10 @@ PERL_LOCAL_LIB_ROOT="/home/stibi/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_R
 PERL_MB_OPT="--install_base \"/home/stibi/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/stibi/perl5"; export PERL_MM_OPT;
 
+# +---------+
+# | SCRIPTS |
+# +---------+
+
+source ~/bin/scripts.zsh
+
 eval "$(starship init zsh)"
