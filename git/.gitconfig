@@ -41,7 +41,6 @@
     lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
     ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
     le = log --oneline --decorate
-    # list of all aliased
     la = "!git config -l | grep alias | cut -c 7-"
     co = checkout
     st = status
@@ -72,6 +71,10 @@
     verbs = !git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr
     prstash = "!f() { git fetch $1 refs/pull-requests/$2/from:$3; } ; f"
     lol = log --graph --pretty=format:\"%C(yellow)%h%Creset%C(cyan)%C(bold)%d%Creset %C(cyan)(%cr)%Creset %C(green)%ce%Creset %s\"
+    # Thanks! https://filip-prochazka.com/blog/git-fixup
+    #cif = "!git commit --fixup=HEAD"
+    cif = "!git commit --fixup=$(git-log-vgrep-most-recent-commit 'fixup!')"
+    rbi = "rebase -i --autosquash"
 
 [push]
     default = simple
