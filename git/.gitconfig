@@ -50,7 +50,6 @@
     brdd = branch -D
     wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\""
     unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
-    panic = !tar cvf ../git_panic.tar *
     ahead = log origin/dev..HEAD
     amend = commit --amend -C HEAD
     undo = reset --soft HEAD^
@@ -64,12 +63,7 @@
     ds = diff --staged
     cob = checkout -b
     unstage = reset HEAD --
-    k = !gitk
-    g = !git gui
-    h = !git --no-pager log origin/dev..HEAD --abbrev-commit --pretty=oneline
-    pom = !sh -c 'git h && echo Ready to push? ENTER && read && git push origin dev' -
     verbs = !git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr
-    prstash = "!f() { git fetch $1 refs/pull-requests/$2/from:$3; } ; f"
     lol = log --graph --pretty=format:\"%C(yellow)%h%Creset%C(cyan)%C(bold)%d%Creset %C(cyan)(%cr)%Creset %C(green)%ce%Creset %s\"
     # Thanks! https://filip-prochazka.com/blog/git-fixup
     #cif = "!git commit --fixup=HEAD"
