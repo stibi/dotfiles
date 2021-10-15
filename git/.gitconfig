@@ -75,6 +75,7 @@
     #cif = "!git commit --fixup=HEAD"
     cif = "!git commit --fixup=$(git-log-vgrep-most-recent-commit 'fixup!')"
     rbi = "rebase -i --autosquash"
+    pf = push --force-with-lease
 
 [push]
     default = simple
