@@ -96,3 +96,5 @@
 [includeIf "gitdir:pb/"]
     path = .gitconfig-pb
 
+[rebase]
+	autosquash = true
