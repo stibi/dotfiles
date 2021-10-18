@@ -1,0 +1,16 @@
+{
+    "workbench.colorTheme": "Atom One Light",
+    "editor.rulers": [100,100],
+    "editor.fontFamily": "'Noto Sans Mono', 'InputMono Nerd Font'",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "explorer.autoReveal": false,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 100,
+    "html.format.wrapLineLength": 100,
+    "[markdown]":{
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 100,
+    },
+}
