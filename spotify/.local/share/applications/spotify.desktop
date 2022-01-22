@@ -4,7 +4,7 @@ Name=Spotify
 GenericName=Music Player
 Icon=spotify-client
 TryExec=spotify
-Exec=spotify --uri=%U
+Exec=spotify --force-device-scale-factor=2 --uri=%U
 Terminal=false
 MimeType=x-scheme-handler/spotify;
 Categories=Audio;Music;Player;AudioVideo;
