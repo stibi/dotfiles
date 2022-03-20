@@ -55,3 +55,4 @@ PERL_MM_OPT="INSTALL_BASE=/home/stibi/perl5"; export PERL_MM_OPT;
 source ~/bin/scripts.zsh
 
 eval "$(starship init zsh)"
+eval "$(direnv hook zsh)"
