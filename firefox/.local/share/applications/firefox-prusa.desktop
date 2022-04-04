@@ -1,10 +1,10 @@
 [Desktop Entry]
 Version=1.0
-Name=Firefox productboard profil
+Name=Firefox Prusa3D profil
 GenericName=Web Browser
 Comment=Browse the World Wide Web
 Keywords=Internet;WWW;Browser;Web;Explorer
-Exec=/usr/lib/firefox/firefox -P productboard
+Exec=/usr/lib/firefox/firefox -P prusa3d
 Icon=firefox
 Terminal=false
 X-MultipleArgs=false
