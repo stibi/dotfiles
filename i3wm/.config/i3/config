@@ -79,6 +79,10 @@ bindsym $mod+Shift+Tab move container to workspace back_and_forth
 bindsym $mod+comma move scratchpad
 bindsym $mod+period scratchpad show
 
+# makes a floating windows sticky, meaning visible on all workspaces
+# https://i3wm.org/docs/userguide.html#_sticky_floating_windows
+bindsym $mod+Shift+S sticky toggle
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
