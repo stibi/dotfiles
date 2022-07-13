@@ -70,6 +70,10 @@
     cif = "!git commit --fixup=$(git-log-vgrep-most-recent-commit 'fixup!')"
     rbi = "rebase -i --autosquash"
     pf = push --force-with-lease
+    # http://www.janosgyerik.com/an-easy-way-to-push-the-current-branch/
+    pr = push -u origin HEAD
+    # deletes local branches merged to master
+    #brclean = branch --merged master | grep -v "^\* master" | xargs -n 1 -r git branch -d
 
 [push]
     default = simple
