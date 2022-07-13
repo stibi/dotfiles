@@ -98,8 +98,8 @@
 [init]
 	defaultBranch = main
 
-[includeIf "gitdir:pb/"]
-    path = .gitconfig-pb
+[includeIf "gitdir:prusa/"]
+    path = .gitconfig-prusa
 
 [rebase]
 	autosquash = true
