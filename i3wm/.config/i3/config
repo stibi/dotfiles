@@ -173,6 +173,9 @@ for_window [class="scratchpad"] border 2pixel
 # plavajici okynka
 for_window [class="Yubico Authenticator"] floating enable
 for_window [class="(?i)arandr"] floating enable
+for_window [title="^zoom$"] floating enable
+for_window [class="pavucontrol"] border normal
+for_window [class="pavucontrol"] floating enable
 
 bindsym $mod+Escape [class="scratchpad"] scratchpad show
 bindsym F12 exec --no-startup-id "rofi -show combi -config ~/.config/rofi/config.rasi"
