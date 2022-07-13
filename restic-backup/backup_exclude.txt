@@ -9,10 +9,10 @@
 /home/stibi/.npm
 /home/stibi/.m2
 /home/stibi/VirtualBox*
-/home/stibi/.config/Code/Logs
-/home/stibi/.config/Code/Cache
-/home/stibi/.config/Code/CachedData
-/home/stibi/.config/Code/CachedExtensions
+/home/stibi/.config/Code\ -\ OSS/Logs
+/home/stibi/.config/Code\ -\ OSS/Cache
+/home/stibi/.config/Code\ -\ OSS/CachedData
+/home/stibi/.config/Code\ -\ OSS/CachedExtensions
 /home/stibi/.config/Slack/Cache
 /home/stibi/.config/chromium
 /home/stibi/.steam
