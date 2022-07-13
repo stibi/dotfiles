@@ -1,0 +1,6 @@
+[kubernetes]
+disabled = false
+format = '[$symbol$context]($style) in '
+[kubernetes.context_aliases]
+"prusa-production-lke54529-ctx" = "prusa-prod"
+"prusa-test-lke51866-ctx" = "prusa-test"
