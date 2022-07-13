@@ -15,7 +15,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:TeX Gyre Heros Regular 10
 
-set $primary_display DP1-1
+set $primary_display DP-1-1
 set $external_display eDP1
 
 # Use pactl to adjust volume in PulseAudio.
