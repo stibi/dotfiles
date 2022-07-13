@@ -35,14 +35,23 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = TeX Gyre Heros Regular:size=10:antialias=true
-font-1 = Noto Sans Symbols:size=10:antialias=true
-font-2 = Symbols Nerd Font:antialias=false:pixelsize=8
-font-3 = Font Awesome 5 Free:size=10:antialias=true
+font-0 = fixed:pixelsize=11;1
+font-1 = "Roboto:size=11:weight=bold;2"
+font-2 = "Noto Sans:size=11;1"
+; font-0 = fixed:pixelsize=10;1
+; font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+; font-2 = siji:pixelsize=10;1
+; font-0 = Cascadia Mono:size=10:antialias=true
+; font-1 = Symbols Nerd Font:size=10:antialias=true
+; font-3 = "Symbola:size=10:antialias=true"
+font-3 = Noto Color Emoji:scale=11:antialias=true
+font-4 = InputMono Nerd Font:size=11:antialias=true
+; font-2 = Noto Sans Symbols:size=10:antialias=true
+; font-2 = Symbols Nerd Font:antialias=false:pixelsize=8
 
 modules-left = i3
 modules-center = 
-modules-right = xbacklight pulseaudio wlan eth filesystem battery cpu memory temperature date
+modules-right = pulseaudio wlan eth filesystem battery cpu memory temperature count-updates bluetooth date
 
 tray-position = right
 tray-padding = 2
@@ -87,9 +96,9 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = "Wuncon Siji:pixelsize=10;1"
+; font-0 = fixed:pixelsize=10;1
+; font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+; font-2 = "Wuncon Siji:pixelsize=10;1"
 
 modules-left = i3
 modules-center = 
@@ -194,42 +203,6 @@ label-urgent-padding = ${module/bspwm.label-urgent-padding}
 ; Separator in between workspaces
 ; label-separator = |
 
-
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-[module/xbacklight]
-type = internal/xbacklight
-
-format = <label> <bar>
-label = BL
-
-bar-width = 10
-bar-indicator = |
-bar-indicator-foreground = #fff
-bar-indicator-font = 4
-bar-fill = ─
-bar-fill-font = 4
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 4
-bar-empty-foreground = ${colors.foreground-alt}
-
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
-
 [module/cpu]
 type = internal/cpu
 interval = 2
@@ -271,11 +244,11 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = enp0s31f6
+interface = enp0s13f0u1u2
 interval = 3.0
 
 format-connected-underline = #55aa55
-format-connected-prefix = " "
+format-connected-prefix = "🔌 "
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
 
@@ -284,26 +257,6 @@ format-disconnected =
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
-
-[module/cellular]
-type = custom/script
-
-exec = ~/bin/cellular_status.sh
-
-; Conditional command that, if defined, needs to exit successfully
-; before the main exec command is invoked.
-; Default: ""
-#exec-if = pgrep -x myservice
-
-; Will the script output continous content?
-; Default: false
-tail = false
-
-; Seconds to sleep between updates
-; Default: 5 (0 if `tail = true`)
-interval = 90
-
-format-underline = #9f78e1
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -325,39 +278,11 @@ bar-volume-foreground-5 = #f5a70a
 bar-volume-foreground-6 = #ff5555
 bar-volume-gradient = false
 bar-volume-indicator = |
-bar-volume-indicator-font = 2
+; bar-volume-indicator-font = 2
 bar-volume-fill = ─
-bar-volume-fill-font = 2
+; bar-volume-fill-font = 2
 bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
-
-[module/alsa]
-type = internal/alsa
-
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL
-label-volume-foreground = ${root.foreground}
-
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
+; bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/battery]
@@ -366,30 +291,38 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
+format-charging = <animation-charging>   <label-charging>
 format-charging-underline = #ffb52a
 
-format-discharging = " <label-discharging>"
+format-discharging = <animation-discharging>   <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
 ramp-capacity-foreground = ${colors.foreground-alt}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
+animation-charging-0 = ${self.ramp-capacity-0}
+animation-charging-1 = ${self.ramp-capacity-1}
+animation-charging-2 = ${self.ramp-capacity-2}
+animation-charging-3 = ${self.ramp-capacity-3}
+animation-charging-4 = ${self.ramp-capacity-4}
 animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 750
 
-animation-discharging-0 =🔋
-animation-discharging-1 =🔋
-animation-discharging-2 =🔋
+animation-discharging-0 = ${self.ramp-capacity-4}
+animation-discharging-1 = ${self.ramp-capacity-3}
+animation-discharging-2 = ${self.ramp-capacity-2}
+animation-discharging-3 = ${self.ramp-capacity-1}
+animation-discharging-4 = ${self.ramp-capacity-0}
+
+
 animation-discharging-foreground = ${colors.foreground-alt}
 animation-discharging-framerate = 750
 
@@ -411,35 +344,6 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
-
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
 
 [settings]
 screenchange-reload = true
@@ -471,5 +375,16 @@ date-alt = %A, %d %B %Y
 time-alt = %H:%M:%S
 
 label = %date% %time%
+
+[module/count-updates]
+type = custom/script
+exec = ~/.config/polybar/scripts/count-updates.sh
+interval = 10
+
+[module/bluetooth]
+type = custom/script
+exec = rofi-bluetooth --status
+interval = 1
+click-left = rofi-bluetooth &
 
 ; vim:ft=dosini

@@ -1,0 +1,9 @@
+[Unit]
+Description=Count how many updates are available
+
+[Timer]
+OnCalendar=hourly
+Unit=check-updates.service
+
+[Install]
+WantedBy=timers.target

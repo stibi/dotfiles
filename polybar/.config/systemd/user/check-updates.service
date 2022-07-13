@@ -1,0 +1,6 @@
+[Unit]
+Description=Count how many updates are available
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sh -c '/usr/bin/checkupdates | wc -l > ~/.countupdates.count'
