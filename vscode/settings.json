@@ -1,0 +1,30 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "python.venvPath": ".venv",
+    "redhat.telemetry.enabled": false,
+    "explorer.autoReveal": false,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": true,
+        "plaintext": false,
+        "markdown": false
+    },
+    "workbench.colorTheme": "Default Light+",
+    "workbench.tree.indent": 15,
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#05ef3c"
+    },
+    "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 13,
+    "editor.fontLigatures": true,
+    "indentRainbow.ignoreErrorLanguages": [
+        "terraform",
+        "groovy"
+    ],
+    "indentRainbow.colorOnWhiteSpaceOnly": true,
+}
