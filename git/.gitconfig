@@ -1,16 +1,19 @@
 [user]
     name = Martin Stiborský
     email = martin.stiborsky@gmail.com
-    signingkey = E7B551FD804341A8
+    #signingkey = E7B551FD804341A8
 
 [core]
     editor = vim
     pager = diff-so-fancy | less --tabs=4 -RFX
     #pager = delta
-    excludesfile = /home/stibi/.gitignore
+    # git is by default looking for a $XDG_CONFIG_HOME/git/ignore file, on macos (and others) that means ~/.config/git/ignore
+    #excludesfile = /home/stibi/.gitignore
+    # protoze macos a case insensitive fs
+    #ignoreCase = false
 
 [commit]
-    gpgsign = true
+    gpgsign = false
 
 [color]
     status = auto
@@ -48,7 +51,7 @@
     br = branch -v
     brd = branch -d
     brdd = branch -D
-    wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\""
+    wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit --no-verify -m \"wip\""
     unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
     ahead = log origin/dev..HEAD
     amend = commit --amend -C HEAD
@@ -72,12 +75,15 @@
     pf = push --force-with-lease
     # http://www.janosgyerik.com/an-easy-way-to-push-the-current-branch/
     pr = push -u origin HEAD
+	staash = stash --all
+	bb = !better-git-branch.sh
+	done = "!f() { git fetch && git branch -D @{-1} && git pull; }; f"
     # deletes local branches merged to master
     #brclean = branch --merged master | grep -v "^\* master" | xargs -n 1 -r git branch -d
 
 [push]
     default = simple
-	autoSetupRemote = true
+    autoSetupRemote = true
 
 [branch]
     autosetuprebase = always
@@ -101,6 +107,9 @@
 [includeIf "gitdir:prusa/"]
     path = .gitconfig-prusa
 
+[includeIf "gitdir:atlas/"]
+    path = .gitconfig-atlas
+
 [rebase]
 	autosquash = true
 
@@ -110,3 +119,9 @@
                 --preview 'git show --color {+1}' \
                 --preview-window=up:80% \
                 --prompt 'Select commit: '
+[status]
+	submoduleSummary = true
+[merge]
+	conflictStyle = zdiff3
+[rerere]
+	enabled = true
