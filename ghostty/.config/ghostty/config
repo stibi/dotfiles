@@ -4,6 +4,8 @@ font-family = CaskaydiaCove Nerd Font
 font-size = 14
 
 cursor-style = block
+# jinak to neni block, ale shell integration z toho vyrobi bar
+shell-integration-features = no-cursor
 cursor-style-blink = false
 
 unfocused-split-fill = ffffff
@@ -20,4 +22,4 @@ quick-terminal-position = center
 quick-terminal-screen = main
 quick-terminal-animation-duration = 0
 # how to configure size of the quick terminal?
-
+macos-titlebar-style = tabs
