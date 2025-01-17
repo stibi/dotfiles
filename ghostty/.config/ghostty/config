@@ -23,3 +23,13 @@ quick-terminal-screen = main
 quick-terminal-animation-duration = 0
 # how to configure size of the quick terminal?
 macos-titlebar-style = tabs
+
+keybind = opt+1=goto_tab:1
+keybind = opt+2=goto_tab:2
+keybind = opt+3=goto_tab:3
+keybind = opt+4=goto_tab:4
+keybind = opt+5=goto_tab:5
+keybind = opt+6=goto_tab:6
+keybind = opt+7=goto_tab:7
+keybind = opt+8=goto_tab:8
+keybind = opt+9=goto_tab:9
