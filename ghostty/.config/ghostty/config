@@ -19,7 +19,7 @@ quit-after-last-window-closed = true
 
 keybind = global:cmd+escape=toggle_quick_terminal
 quick-terminal-position = center
-quick-terminal-screen = main
+quick-terminal-screen = macos-menu-bar
 quick-terminal-animation-duration = 0
 # how to configure size of the quick terminal?
 macos-titlebar-style = tabs
