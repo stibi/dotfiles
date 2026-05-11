@@ -1,2 +1,8 @@
 # work related, not public
 zsh/.zshrc.d/revolgy.zsh
+
+# local-only env / secrets
+zsh/.zshrc.d/exports.zsh
+
+# binaries — install separately on each machine
+zsh/bin/grpc-client-cli
