@@ -1,0 +1,10 @@
+views:
+  v1/pods:
+    sortColumn: AGE:asc
+    columns: []
+  v1/namespaces:
+    sortColumn: AGE:asc
+    columns: []
+  v1/deployments:
+    sortColumn: AGE:asc
+    columns: []
