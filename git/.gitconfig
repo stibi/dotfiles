@@ -1,16 +1,19 @@
 [user]
     name = Martin Stiborský
-    email = martin.stiborsky@gmail.com
+    email = martin@stiborsky.cz
     #signingkey = E7B551FD804341A8
 
 [core]
-    editor = vim
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    editor = nvim
+    #pager = diff-so-fancy | less --tabs=4 -RFX
     #pager = delta
     # git is by default looking for a $XDG_CONFIG_HOME/git/ignore file, on macos (and others) that means ~/.config/git/ignore
     #excludesfile = /home/stibi/.gitignore
     # protoze macos a case insensitive fs
     #ignoreCase = false
+
+[pager]
+    difftool = true
 
 [commit]
     gpgsign = false
@@ -22,6 +25,9 @@
 
 [diff]
     colorMoved = default
+    # Set difftastic as the default difftool, so we don't need to specify
+    # `-t difftastic` every time.
+    tool = difftastic
 
 [color "diff-highlight"]
     oldNormal = red bold
@@ -125,3 +131,11 @@
 	conflictStyle = zdiff3
 [rerere]
 	enabled = true
+
+[difftool]
+    # Run the difftool immediately, don't ask 'are you sure' each time.
+    prompt = false
+
+[difftool "difftastic"]
+    # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
+    cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
