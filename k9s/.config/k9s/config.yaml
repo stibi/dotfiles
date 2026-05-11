@@ -17,8 +17,8 @@ k9s:
     #skin: catppuccin-mocha-transparent
     #skin: catppuccin-latte-transparent
     #skin: catppuccin-frappe
-    skin: catppuccin-latte
     #skin: catppuccin-macchiato
+    # Active skin is driven by the K9S_SKIN env var (see zsh/.zshrc.d/appearance.zsh).
   skipLatestRevCheck: false
   disablePodCounting: false
   shellPod:

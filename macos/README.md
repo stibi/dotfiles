@@ -5,15 +5,21 @@ Runs as a per-user `launchd` agent — set-and-forget after install.
 
 ## What gets synced
 
-| App        | File                          | What changes                                  |
-|------------|-------------------------------|-----------------------------------------------|
-| k9s        | `~/.config/k9s/config.yaml`   | `skin: catppuccin-latte` ↔ `catppuccin-mocha` |
-| kubecolor  | `~/.kube/color.yaml`          | `preset: light` ↔ `preset: dark`              |
-| tmux       | `~/.tmux.conf`                | Re-sourced; its own `if-shell` picks variant  |
-| Ghostty    | (handled natively, no script) | `theme = light:...,dark:...` directive        |
+| App        | Mechanism                                              | How                                                       |
+|------------|--------------------------------------------------------|-----------------------------------------------------------|
+| kubecolor  | This script seds `~/.kube/color.yaml`                  | `preset: light` ↔ `preset: dark`                          |
+| tmux       | This script runs `tmux source-file`                    | tmux's own `if-shell` picks `latte`/`mocha` on re-source  |
+| k9s        | `K9S_SKIN` env var set in `zsh/.zshrc.d/appearance.zsh`| Each new shell exports the right value at startup         |
+| Ghostty    | Native dual-theme directive                            | `theme = light:catppuccin-latte,dark:catppuccin-mocha`    |
 
-The Ghostty terminal switches itself via its native dual-theme syntax — the script
-is not involved.
+Ghostty and k9s don't need the watcher script — Ghostty switches itself; k9s is
+driven by an env var evaluated per shell. The script only handles the things
+that genuinely need a per-toggle file rewrite (kubecolor) or a signal (tmux).
+
+**k9s caveat:** the env var is fixed at shell startup, so if you toggle
+appearance and then run `k9s` from a shell that was already open, you'll get
+the previous mode's skin. Open a new shell tab after toggling — or
+`source ~/.zshrc.d/appearance.zsh && k9s` in the existing shell.
 
 ## How it works
 
@@ -27,9 +33,9 @@ launchd StartInterval (every 10s) ───────────────�
                                                                         │
                                                        if mode changed since last run
                                                                         │
-                                                     ┌──────────────────┼──────────────────┐
-                                                     ▼                  ▼                  ▼
-                                                  sed k9s          sed kubecolor    tmux source-file
+                                                              ┌─────────┴────────┐
+                                                              ▼                  ▼
+                                                       sed kubecolor    tmux source-file
 ```
 
 Two trigger sources for robustness:
@@ -134,5 +140,7 @@ Run the script by hand to see the error: `~/dev/moje/dotfiles/macos/apply-appear
 The symlink or `launchctl load` step was skipped — see Install above.
 
 **k9s shows the wrong skin.**
-A *running* k9s session caches its skin at startup. Quit and relaunch k9s;
-new sessions pick up the synced file.
+The skin is driven by `K9S_SKIN`, which is fixed at *shell* startup. If you
+launched the shell before toggling appearance, the env var is stale. Open a
+new shell tab and relaunch k9s, or `source ~/.zshrc.d/appearance.zsh` first.
+Verify with `echo $K9S_SKIN`.

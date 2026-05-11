@@ -23,15 +23,8 @@ ts=$(date '+%Y-%m-%d %H:%M:%S')
 echo "[$ts] appearance=$mode (was: ${last_mode:-unknown})"
 
 # --- k9s skin ---
-k9s_config="$HOME/.config/k9s/config.yaml"
-if [[ -f "$k9s_config" ]]; then
-    if [[ "$mode" == dark ]]; then
-        from=catppuccin-latte to=catppuccin-mocha
-    else
-        from=catppuccin-mocha to=catppuccin-latte
-    fi
-    sed -i '' -E "s/^([[:space:]]*)skin:[[:space:]]+${from}[[:space:]]*$/\\1skin: ${to}/" "$k9s_config"
-fi
+# Handled by K9S_SKIN env var in zsh/.zshrc.d/appearance.zsh; nothing to do here.
+# New shells will pick up the right skin; restart k9s itself to see it.
 
 # --- kubecolor preset ---
 kube_color="$HOME/.kube/color.yaml"
