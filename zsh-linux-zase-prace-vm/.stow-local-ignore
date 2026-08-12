@@ -1,0 +1,21 @@
+# Files in this package that must NOT be symlinked into $HOME.
+#
+# Providing this file replaces stow's built-in default ignore list, so the
+# usual VCS/editor patterns are repeated here rather than inherited.
+
+# This package's own documentation
+^/README.*
+^/LICENSE.*
+
+# VCS
+\.git
+\.gitignore
+CVS
+\.svn
+\.hg
+
+# Editor / OS noise
+.+~
+\#.*\#
+\.DS_Store
+.+\.swp
