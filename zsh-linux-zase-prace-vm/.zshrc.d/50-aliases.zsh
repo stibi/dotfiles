@@ -56,3 +56,7 @@ alias apts='apt search'
 alias sc='sudo systemctl'
 alias scu='systemctl --user'
 alias jc='sudo journalctl'
+
+# Jump to the working trees used daily.
+alias aws0='cd ~/dev/atlas/aws0'
+alias iac='cd ~/dev/atlas/iac'
