@@ -138,6 +138,45 @@ else
     _appearance_apply dark
 fi
 
+# hunk supports automatic light/dark detection via `theme = "auto"`, but has no
+# light/dark theme *pairing* — auto resolves to its own built-in defaults, not
+# to a configured Catppuccin pair. So the palette is supplied per invocation
+# here instead, driven by TERM_APPEARANCE, and ~/.config/hunk/config.toml keeps
+# theme = "auto" as the fallback for anything that bypasses this function.
+#
+# Read at call time rather than baked in at detect time, so `appearance light`
+# takes effect on the next hunk run without re-sourcing.
+if (( $+commands[hunk] )); then
+    hunk() {
+        local -a args=("$@")
+        local theme=catppuccin-mocha
+        [[ $TERM_APPEARANCE == light ]] && theme=catppuccin-latte
+
+        # Never override an explicit --theme.
+        if (( ${args[(Ie)--theme]} )); then
+            command hunk "$@"
+            return
+        fi
+
+        # --theme only parses *after* the subcommand: `hunk --theme X diff`
+        # fails with "Unknown command: --theme". Subcommands verified to accept
+        # it are listed explicitly; everything else passes through untouched so
+        # a command that does not take the flag cannot be broken by it.
+        case ${1-} in
+            diff|show|patch|pager|difftool)
+                command hunk "$1" --theme "$theme" "${@:2}" ;;
+            # `stash` is nested — the flag belongs to `stash show`.
+            stash)
+                if [[ ${2-} == show ]]; then
+                    command hunk stash show --theme "$theme" "${@:3}"
+                else
+                    command hunk "$@"
+                fi ;;
+            *)  command hunk "$@" ;;
+        esac
+    }
+fi
+
 # Re-detect on demand, for when the OS theme changes mid-session. Live
 # switching would need an async reader competing with zle for the tty, which is
 # more trouble than it is worth; this is the manual escape hatch.

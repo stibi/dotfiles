@@ -1,0 +1,37 @@
+# hunk (hunk.dev) — https://github.com/modem-dev/hunk
+#
+# theme is deliberately "auto" here even though the palette we actually want is
+# Catppuccin. hunk supports automatic light/dark detection (it queries OSC 11,
+# computes WCAG luminance and picks at a 0.5 threshold) but it has NO light/dark
+# theme *pairing*: "auto" resolves to hunk's own built-in defaults, not to a
+# configured catppuccin-latte/catppuccin-mocha pair.
+#
+# So Catppuccin is supplied per invocation by the `hunk` wrapper function in
+# .zshrc.d/15-appearance.zsh, which passes --theme based on TERM_APPEARANCE.
+# This value is the fallback for anything that bypasses that wrapper — a
+# non-interactive invocation, or hunk spawned directly by another program.
+# "auto" is the right fallback there: getting the luminance right with the
+# wrong palette reads far better than the reverse.
+#
+# Note hunk's detection is startup-only. The resolved value is `initialThemeMode`
+# in its source, and hunk actively disables terminal mode 2031 (CSI ? 2031 l) so
+# unsolicited colour-scheme notifications cannot land in its key input. Since
+# hunk is launched per-diff rather than left running, each invocation re-detects
+# and the gap only shows if the OS theme flips mid-review.
+theme = "auto"
+
+# Layout, not appearance: auto | split | stack.
+mode = "auto"
+
+vcs = "git"
+watch = false
+exclude_untracked = false
+line_numbers = true
+tab_width = 4
+wrap_lines = false
+hunk_headers = true
+menu_bar = true
+agent_notes = true
+transparent_background = false
+copy_decorations = false
+cursor_line = "row"
