@@ -31,6 +31,7 @@ export LESS='-R -F -X'
 # starship reads this instead of guessing at $XDG_CONFIG_HOME.
 export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 
-# bat is installed as `batcat` on Debian; point its config at the same theme
-# the rest of the setup uses.
-export BAT_THEME="Catppuccin Mocha"
+# bat's theme is NOT pinned here. Its default is `--theme=auto`, which queries
+# the terminal itself; setting BAT_THEME would override that and leave it dark
+# on a light terminal. 15-appearance.zsh sets BAT_THEME_DARK/BAT_THEME_LIGHT
+# instead, which is what auto chooses between.
