@@ -33,11 +33,13 @@ _appearance_detect() {
     [[ -o interactive ]] || return 1
 
     local ttyfd
-    exec {ttyfd}<>/dev/tty 2>/dev/null || return 1
+    # Braces matter: `exec ... 2>/dev/null` would redirect the *shell's* stderr
+    # to /dev/null permanently. Scoping it to a block keeps it to this open.
+    { exec {ttyfd}<>/dev/tty } 2>/dev/null || return 1
 
     local old reply
     if ! old=$(stty -g <&$ttyfd 2>/dev/null); then
-        exec {ttyfd}>&- 2>/dev/null
+        { exec {ttyfd}>&- } 2>/dev/null
         return 1
     fi
     stty -echo <&$ttyfd 2>/dev/null
@@ -76,7 +78,7 @@ _appearance_detect() {
     fi
 
     stty "$old" <&$ttyfd 2>/dev/null
-    exec {ttyfd}>&- 2>/dev/null
+    { exec {ttyfd}>&- } 2>/dev/null
 
     [[ -n $_appearance_result ]]
 }
