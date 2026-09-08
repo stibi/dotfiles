@@ -179,6 +179,20 @@ if (( $+commands[hunk] )); then
     }
 fi
 
+# Codex's `tui.theme` controls syntax highlighting (including fenced code),
+# but a selection made with `/theme` is persisted as one fixed theme. Supply
+# the matching Catppuccin flavour per launch instead, without rewriting
+# ~/.codex/config.toml. Codex detects the terminal's general light/dark palette
+# when its TUI starts, so an already-running session still needs to be resumed
+# after the terminal appearance changes.
+if (( $+commands[codex] )); then
+    codex() {
+        local theme=catppuccin-mocha
+        [[ $TERM_APPEARANCE == light ]] && theme=catppuccin-latte
+        command codex -c "tui.theme=\"$theme\"" "$@"
+    }
+fi
+
 # Re-detect on demand, for when the OS theme changes mid-session. Live
 # switching would need an async reader competing with zle for the tty, which is
 # more trouble than it is worth; this is the manual escape hatch.
