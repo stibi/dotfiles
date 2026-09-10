@@ -127,11 +127,27 @@ _appearance_apply() {
     fi
 }
 
-# bat needs no detection at all — `--theme=auto` is its default and it runs its
-# own terminal query. It only needs to know which theme to use on each side.
-# Setting BAT_THEME instead would pin it and defeat that.
+# bat's own `--theme=auto` query misdetects the background through herdr. Keep
+# the light/dark theme pair here, but choose the side from the terminal query
+# that this file already performed successfully. The wrapper reads at call
+# time, so `appearance light|dark` affects the next invocation immediately.
 export BAT_THEME_DARK="Catppuccin Mocha"
 export BAT_THEME_LIGHT="Catppuccin Latte"
+
+if (( $+commands[batcat] )); then
+    bat() {
+        local arg
+
+        # Preserve an explicit caller choice, in either accepted form.
+        for arg in "$@"; do
+            case $arg in
+                --theme|--theme=*) command batcat "$@"; return ;;
+            esac
+        done
+
+        command batcat --theme="${TERM_APPEARANCE:-dark}" "$@"
+    }
+fi
 
 # Note the absence of a command substitution here — see the header.
 if _appearance_detect; then

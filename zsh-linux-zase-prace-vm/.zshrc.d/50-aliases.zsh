@@ -2,7 +2,7 @@
 #
 # Debian names two of these binaries differently from upstream:
 #   bat -> batcat, fd -> fdfind
-# so they get aliased back to the names used everywhere else.
+# so they are exposed under the names used everywhere else.
 
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias g="grep"
@@ -30,7 +30,8 @@ else
     alias la='ls -la'
 fi
 
-(( $+commands[batcat] )) && alias bat='batcat' && alias cat='batcat --plain'
+# `bat` is a function in 15-appearance.zsh so it can select a light/dark theme.
+(( $+commands[batcat] )) && alias cat='bat --plain'
 (( $+commands[fdfind] )) && alias fd='fdfind'
 
 # Terraform / OpenTofu
