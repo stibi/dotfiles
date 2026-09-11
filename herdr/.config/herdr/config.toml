@@ -31,3 +31,27 @@ key = "prefix+t"
 type = "plugin_action"
 command = "herdr-navigator.open"
 description = "jump to anything"
+
+[[keys.command]]
+key = "prefix+shift+h"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review"
+description = "review changes with hunk"
+
+[[keys.command]]
+key = "prefix+shift+s"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.send-review"
+description = "send hunk review to agent"
+
+[[keys.command]]
+key = "prefix+shift+c"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review:commit"
+description = "review last commit with hunk"
+
+[[keys.command]]
+key = "prefix+shift+a"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review:staged"
+description = "review staged changes with hunk"
