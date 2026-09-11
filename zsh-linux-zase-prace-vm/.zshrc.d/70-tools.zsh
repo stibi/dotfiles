@@ -34,6 +34,11 @@ fi
 # --- direnv ------------------------------------------------------------
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
+# --- worktrunk ---------------------------------------------------------
+# The wrapper lets `wt switch` change this shell's directory. Keep this here
+# rather than running `wt config shell install`, which edits .zshrc itself.
+(( $+commands[wt] )) && eval "$(wt config shell init zsh)"
+
 # --- kubectl -----------------------------------------------------------
 (( $+commands[kubectl] )) && source <(kubectl completion zsh)
 
