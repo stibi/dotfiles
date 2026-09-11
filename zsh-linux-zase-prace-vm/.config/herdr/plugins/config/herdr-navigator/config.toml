@@ -1,0 +1,50 @@
+[picker]
+reuse_existing = true
+create_missing = true
+prefix_workspace_labels = false
+engine = "nucleo"
+source_order = [
+  "workspace",
+  "agent",
+  "zoxide",
+  "root",
+  "session",
+  "project",
+  "quick",
+  "server",
+  "plugin",
+]
+source_priority_boost = 5
+agent_sort = "herdr"
+preview = true
+detailed_rows = true
+check_updates = true
+vim_mode = false
+
+[notifications]
+enabled = true
+audio = false
+
+[jump_back]
+enabled = true
+pin_previous = true
+
+[sources]
+open_workspaces = true
+agents = true
+zoxide = true
+roots = true
+sessions = true
+servers = false
+herdr_plus_projects = false
+herdr_plus_quick_actions = false
+
+[theme]
+inherit_herdr = true
+
+[[roots]]
+path = "~/dev"
+max_depth = 3
+
+[sessions]
+local = true

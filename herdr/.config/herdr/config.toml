@@ -25,3 +25,9 @@ dark_name = "catppuccin"
 [keys]
 # prefix = "ctrl+a"
 prefix = "`"
+
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "herdr-navigator.open"
+description = "jump to anything"
