@@ -1,0 +1,17 @@
+onboarding = false
+
+[ui]
+agent_panel_sort = "priority"
+sidebar_width = 32
+sidebar_min_width = 24
+sidebar_max_width = 48
+
+[theme]
+name = "catppuccin"
+auto_switch = true
+light_name = "catppuccin-latte"
+dark_name = "catppuccin"
+
+[keys]
+# prefix = "ctrl+a"
+prefix = "`"
