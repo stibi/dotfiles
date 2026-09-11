@@ -9,6 +9,13 @@ pane_borders = "always"
 pane_outer_borders = true
 pane_gaps = false
 
+[ui.toast]
+delivery = "herdr"
+delay_seconds = 2
+
+[ui.toast.herdr]
+position = "bottom-right"
+
 [theme]
 name = "catppuccin"
 auto_switch = true
