@@ -5,6 +5,9 @@ agent_panel_sort = "priority"
 sidebar_width = 32
 sidebar_min_width = 24
 sidebar_max_width = 48
+pane_borders = "always"
+pane_outer_borders = true
+pane_gaps = false
 
 [theme]
 name = "catppuccin"
