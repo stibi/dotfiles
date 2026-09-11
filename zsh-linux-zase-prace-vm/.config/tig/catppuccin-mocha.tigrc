@@ -1,0 +1,63 @@
+# Catppuccin Mocha, approximated with Tig 2.5's xterm-256 colour support.
+set git-colors = no
+
+color default             189 235
+color cursor              189 241 bold
+color status              189 237
+color title-focus         189 237 bold
+color title-blur          146 234
+color search-result       235 223 bold
+color delimiter           103 235
+color header              111 235 bold
+color line-number         103 235
+color id                  151 235
+color date                183 235
+color author              116 235
+color mode                218 235
+color directory           111 235 bold
+color file                189 235
+color file-size           103 235
+color overflow            211 235
+
+color diff-header         111 235 bold
+color diff-chunk          183 235 bold
+color diff-stat           216 235
+color diff-add            151 235
+color diff-add2           151 235
+color diff-add-highlight  151 237 bold
+color diff-del            211 235
+color diff-del2           211 235
+color diff-del-highlight  211 237 bold
+
+color graph-commit        183 235 bold
+color main-commit         189 235
+color main-annotated      146 235
+color main-head           111 235 bold
+color main-remote         183 235
+color main-tracked        116 235
+color main-tag            223 235 bold
+color main-local-tag      216 235
+color main-ref            147 235
+color main-replace        218 235
+
+color stat-none           103 235
+color stat-staged         151 235 bold
+color stat-unstaged       223 235 bold
+color stat-untracked      211 235 bold
+color help-group          183 235 bold
+color help-action         111 235
+
+color palette-0           211 235
+color palette-1           151 235
+color palette-2           223 235
+color palette-3           111 235
+color palette-4           183 235
+color palette-5           116 235
+color palette-6           216 235
+color palette-7           147 235
+color palette-8           211 235 bold
+color palette-9           151 235 bold
+color palette-10          223 235 bold
+color palette-11          111 235 bold
+color palette-12          183 235 bold
+color palette-13          116 235 bold

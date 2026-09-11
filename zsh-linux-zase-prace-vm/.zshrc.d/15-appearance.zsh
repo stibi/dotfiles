@@ -149,6 +149,22 @@ if (( $+commands[batcat] )); then
     }
 fi
 
+# Tig has custom colours but no terminal appearance detection. Select one of
+# the Catppuccin configs per invocation so `appearance light|dark` takes effect
+# immediately. An explicit TIGRC_USER remains an escape hatch for callers.
+if (( $+commands[tig] )); then
+    tig() {
+        if (( ${+TIGRC_USER} )); then
+            command tig "$@"
+            return
+        fi
+
+        local flavour=mocha
+        [[ $TERM_APPEARANCE == light ]] && flavour=latte
+        TIGRC_USER="$HOME/.config/tig/catppuccin-${flavour}.tigrc" command tig "$@"
+    }
+fi
+
 # Note the absence of a command substitution here — see the header.
 if _appearance_detect; then
     _appearance_apply "$_appearance_result"
