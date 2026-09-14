@@ -6,12 +6,10 @@
 # theme *pairing*: "auto" resolves to hunk's own built-in defaults, not to a
 # configured catppuccin-latte/catppuccin-mocha pair.
 #
-# So Catppuccin is supplied per invocation by the `hunk` wrapper function in
-# .zshrc.d/15-appearance.zsh, which passes --theme based on TERM_APPEARANCE.
-# This value is the fallback for anything that bypasses that wrapper — a
-# non-interactive invocation, or hunk spawned directly by another program.
-# "auto" is the right fallback there: getting the luminance right with the
-# wrong palette reads far better than the reverse.
+# So Catppuccin is supplied by ~/.local/bin/hunk-catppuccin. The interactive
+# shell function passes its cached appearance to that launcher, while direct
+# callers such as the Herdr plugin let it query their PTY. This value remains
+# the fallback for anything that bypasses both launch paths.
 #
 # Note hunk's detection is startup-only. The resolved value is `initialThemeMode`
 # in its source, and hunk actively disables terminal mode 2031 (CSI ? 2031 l) so

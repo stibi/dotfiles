@@ -1,0 +1,74 @@
+#!/usr/bin/zsh
+
+# Launch the Ansible-managed Hunk binary with the Catppuccin flavour matching
+# the terminal. Interactive zsh passes its already-detected result; callers
+# such as the Herdr plugin have a PTY but no interactive shell, so query it
+# here. Herdr forwards and caches these terminal replies for remote clients.
+
+real_hunk="$HOME/.local/bin/hunk"
+mode=${HUNK_THEME_APPEARANCE:-}
+
+if [[ $mode != light && $mode != dark ]]; then
+    mode=dark
+    typeset ttyfd old reply result=
+
+    if { exec {ttyfd}<>/dev/tty } 2>/dev/null &&
+            old=$(stty -g <&$ttyfd 2>/dev/null); then
+        stty -echo <&$ttyfd 2>/dev/null
+
+        # Prefer the semantic terminal appearance query.
+        print -nu $ttyfd $'\e[?996n'
+        read -r -s -t 0.3 -d n -u $ttyfd reply 2>/dev/null
+        while read -r -s -t 0 -k 1 -u $ttyfd 2>/dev/null; do :; done
+        case $reply in
+            *997\;1*) result=dark  ;;
+            *997\;2*) result=light ;;
+        esac
+
+        # Fall back to OSC 11 and classify the reported background luminance.
+        if [[ -z $result ]]; then
+            reply=
+            print -nu $ttyfd $'\e]11;?\a'
+            read -r -s -t 0.3 -d $'\a' -u $ttyfd reply 2>/dev/null
+            while read -r -s -t 0 -k 1 -u $ttyfd 2>/dev/null; do :; done
+
+            if [[ $reply == *rgb:* ]]; then
+                typeset hex=${reply#*rgb:} r g b lum
+                r=$(( 16#${${hex%%/*}[1,2]} )); hex=${hex#*/}
+                g=$(( 16#${${hex%%/*}[1,2]} )); hex=${hex#*/}
+                b=$(( 16#${hex[1,2]} ))
+                lum=$(( (r * 299 + g * 587 + b * 114) / 1000 ))
+                (( lum > 127 )) && result=light || result=dark
+            fi
+        fi
+
+        stty "$old" <&$ttyfd 2>/dev/null
+        { exec {ttyfd}>&- } 2>/dev/null
+        [[ -n $result ]] && mode=$result
+    fi
+fi
+
+theme=catppuccin-mocha
+[[ $mode == light ]] && theme=catppuccin-latte
+
+# Respect a caller-supplied theme, including --theme=<name>.
+for arg in "$@"; do
+    case $arg in
+        --theme|--theme=*) exec "$real_hunk" "$@" ;;
+    esac
+done
+
+# Hunk parses --theme after the subcommand. Commands without that option,
+# notably the session API used by herdr-hunk-diff, pass through unchanged.
+case ${1-} in
+    diff|show|patch|pager|difftool)
+        exec "$real_hunk" "$1" --theme "$theme" "${@:2}"
+        ;;
+    stash)
+        if [[ ${2-} == show ]]; then
+            exec "$real_hunk" stash show --theme "$theme" "${@:3}"
+        fi
+        ;;
+esac
+
+exec "$real_hunk" "$@"
