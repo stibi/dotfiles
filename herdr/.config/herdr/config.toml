@@ -25,6 +25,10 @@ dark_name = "catppuccin"
 [keys]
 # prefix = "ctrl+a"
 prefix = "`"
+# herdr-hunk-diff uses this default Herdr binding for its review action.
+# Explicitly free it: otherwise Herdr keeps "swap pane left" and silently
+# disables the conflicting custom command below.
+swap_pane_left = ""
 
 [[keys.command]]
 key = "prefix+t"
