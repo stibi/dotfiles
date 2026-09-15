@@ -83,6 +83,43 @@ _appearance_detect() {
     [[ -n $_appearance_result ]]
 }
 
+_appearance_apply_zsh_highlighting() {
+    local mode=$1 command_colour alias_colour error_colour path_colour
+    local argument_colour comment_colour
+
+    # The highlighting plugin is sourced later in 90-plugins.zsh. During the
+    # initial appearance pass there is nothing to update yet; that file calls
+    # this function once the plugin has created its style table. Subsequent
+    # `appearance light|dark` calls update the live ZLE styles immediately.
+    (( ${+ZSH_HIGHLIGHT_STYLES} )) || return 0
+
+    if [[ $mode == light ]]; then
+        command_colour='#40a02b'  # Latte green
+        alias_colour='#179299'    # Latte teal
+        error_colour='#d20f39'    # Latte red
+        path_colour='#1e66f5'     # Latte blue
+        argument_colour='#df8e1d' # Latte yellow
+        comment_colour='#6c6f85'  # Latte subtext0
+    else
+        command_colour='#a6e3a1'  # Mocha green
+        alias_colour='#94e2d5'    # Mocha teal
+        error_colour='#f38ba8'    # Mocha red
+        path_colour='#89b4fa'     # Mocha blue
+        argument_colour='#f9e2af' # Mocha yellow
+        comment_colour='#6c7086'  # Mocha overlay0
+    fi
+
+    ZSH_HIGHLIGHT_STYLES[command]="fg=$command_colour"
+    ZSH_HIGHLIGHT_STYLES[builtin]="fg=$command_colour"
+    ZSH_HIGHLIGHT_STYLES[function]="fg=$command_colour"
+    ZSH_HIGHLIGHT_STYLES[alias]="fg=$alias_colour"
+    ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=$error_colour"
+    ZSH_HIGHLIGHT_STYLES[path]="fg=$path_colour,underline"
+    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=$argument_colour"
+    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=$argument_colour"
+    ZSH_HIGHLIGHT_STYLES[comment]="fg=$comment_colour"
+}
+
 _appearance_apply() {
     local mode=$1 flavour
     [[ $mode == light ]] && flavour=latte || flavour=mocha
@@ -125,6 +162,9 @@ _appearance_apply() {
         fi
         export STARSHIP_CONFIG="$gen"
     fi
+
+    # --- zsh-syntax-highlighting ------------------------------------------
+    _appearance_apply_zsh_highlighting "$mode"
 }
 
 # bat's own `--theme=auto` query misdetects the background through herdr. Keep
