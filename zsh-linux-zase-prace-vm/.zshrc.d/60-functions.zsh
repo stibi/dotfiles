@@ -48,11 +48,103 @@ certexp() {
     fi
 }
 
+# talosctl-omni <cluster> [talosctl arguments...]
+#
+# Selects the matching Omni service account and generated talosconfig. The
+# subshell is deliberate: the exported service-account secret disappears as
+# soon as talosctl exits instead of leaking into the interactive environment.
+# Cluster names map to these credential pairs:
+#
+#   ~/.config/omni/<cluster>-talos-client.env
+#   ~/.talos/configs/<cluster>-talos-client.yaml
+talosctl-omni-clusters() {
+    local config_file cluster env_file found=0
+
+    while IFS= read -r config_file; do
+        cluster="${config_file##*/}"
+        cluster="${cluster%-talos-client.yaml}"
+        env_file="$HOME/.config/omni/${cluster}-talos-client.env"
+
+        # A config without its matching service-account environment is not
+        # usable through talosctl-omni, so do not advertise partial pairs.
+        if [[ -r "$env_file" ]]; then
+            printf '%s\n' "$cluster"
+            found=1
+        fi
+    done < <(
+        find "$HOME/.talos/configs" -maxdepth 1 -type f \
+            -name '*-talos-client.yaml' -readable -print 2>/dev/null | sort
+    )
+
+    if (( ! found )); then
+        printf '%s\n' 'talosctl-omni-clusters: no complete credential pairs found' >&2
+        return 1
+    fi
+}
+
+talosctl-omni() (
+    local cluster="${1:-}"
+
+    if [[ -z "$cluster" ]]; then
+        printf '%s\n' \
+            'Usage: talosctl-omni <cluster> [talosctl arguments...]' \
+            '       talosctl-omni --list' \
+            'Example: talosctl-omni dat --nodes <machine-uuid> version' \
+            '' 'Available clusters:' >&2
+        talosctl-omni-clusters >&2
+        return 1
+    fi
+    if [[ "$cluster" == "--list" ]]; then
+        talosctl-omni-clusters
+        return
+    fi
+    if [[ "$cluster" == "-h" || "$cluster" == "--help" ]]; then
+        printf '%s\n' \
+            'Usage: talosctl-omni <cluster> [talosctl arguments...]' \
+            '       talosctl-omni --list' \
+            'Example: talosctl-omni dat --nodes <machine-uuid> version'
+        return 0
+    fi
+    shift
+
+    # Keep the value safe to interpolate into paths. Omni cluster names in
+    # use here are lowercase DNS labels (for example dat and crm-prod).
+    case "$cluster" in
+        *[!a-z0-9-]*|-*|*-)
+            printf 'talosctl-omni: invalid cluster name: %s\n' "$cluster" >&2
+            return 2
+            ;;
+    esac
+
+    local env_file="$HOME/.config/omni/${cluster}-talos-client.env"
+    local config_file="$HOME/.talos/configs/${cluster}-talos-client.yaml"
+
+    [[ -r "$env_file" ]] || {
+        printf 'talosctl-omni: cannot read %s\n' "$env_file" >&2
+        return 1
+    }
+    [[ -r "$config_file" ]] || {
+        printf 'talosctl-omni: cannot read %s\n' "$config_file" >&2
+        return 1
+    }
+
+    set -a
+    source "$env_file" || return 1
+    set +a
+
+    [[ -n "${OMNI_ENDPOINT:-}" && -n "${OMNI_SERVICE_ACCOUNT_KEY:-}" ]] || {
+        printf '%s\n' 'talosctl-omni: Omni service-account environment is incomplete' >&2
+        return 1
+    }
+
+    command talosctl --talosconfig "$config_file" "$@"
+)
+
 # gcd — fzf-pick a file changed in the current repo and cd to its directory.
 gcd() {
     local git_status count file dir
     git_status=$(git status --porcelain) || return
-    [[ -z "$git_status" ]] && { echo "No changes."; return }
+    [[ -z "$git_status" ]] && { echo "No changes."; return; }
 
     count=$(echo "$git_status" | wc -l | tr -d ' ')
     (( count > 20 )) && count=20
@@ -69,13 +161,13 @@ gcd() {
 
 # mkcd <dir> — make a directory and step into it.
 mkcd() {
-    [[ -z "$1" ]] && { echo "Usage: mkcd <dir>"; return 1 }
+    [[ -z "$1" ]] && { echo "Usage: mkcd <dir>"; return 1; }
     mkdir -p "$1" && cd "$1"
 }
 
 # extract <archive> — unpack whatever it happens to be.
 extract() {
-    [[ -f "$1" ]] || { echo "extract: '$1' is not a file"; return 1 }
+    [[ -f "$1" ]] || { echo "extract: '$1' is not a file"; return 1; }
     case "$1" in
         *.tar.bz2|*.tbz2) tar xjf "$1"   ;;
         *.tar.gz|*.tgz)   tar xzf "$1"   ;;
