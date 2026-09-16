@@ -48,6 +48,30 @@ certexp() {
     fi
 }
 
+# omnictl [arguments...]
+#
+# Load the Omni API service account only for this invocation. The subshell keeps
+# the credential out of the interactive shell environment after omnictl exits.
+omnictl() (
+    local env_file="$HOME/.config/omni/env"
+
+    [[ -r "$env_file" ]] || {
+        printf 'omnictl: cannot read %s\n' "$env_file" >&2
+        return 1
+    }
+
+    set -a
+    source "$env_file" || return 1
+    set +a
+
+    [[ -n "${OMNI_ENDPOINT:-}" && -n "${OMNI_SERVICE_ACCOUNT_KEY:-}" ]] || {
+        printf '%s\n' 'omnictl: Omni service-account environment is incomplete' >&2
+        return 1
+    }
+
+    command omnictl "$@"
+)
+
 # talosctl-omni <cluster> [talosctl arguments...]
 #
 # Selects the matching Omni service account and generated talosconfig. The
