@@ -45,7 +45,7 @@ if (( $+commands[kubectl] )); then
     alias k=kubectl
     alias ku=kubectl
 fi
-(( $+commands[kubecolor] )) && alias kubectl=kubecolor && compdef kubecolor=kubectl
+(( $+commands[kubecolor] )) && alias kubectl=kubecolor
 (( $+commands[kubie] ))     && alias ki=kubie
 
 # Debian package management

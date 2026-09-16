@@ -40,7 +40,12 @@ fi
 (( $+commands[wt] )) && eval "$(wt config shell init zsh)"
 
 # --- kubectl -----------------------------------------------------------
-(( $+commands[kubectl] )) && source <(kubectl completion zsh)
+if (( $+commands[kubectl] )); then
+    # Bypass the kubectl=kubecolor alias while generating the completion
+    # function, then give kubecolor that function only after it exists.
+    source <(command kubectl completion zsh)
+    (( $+commands[kubecolor] )) && compdef _kubectl kubecolor
+fi
 
 # --- starship ----------------------------------------------------------
 # Last of the prompt-affecting inits so nothing else overwrites PROMPT.
