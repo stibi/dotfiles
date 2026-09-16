@@ -128,6 +128,34 @@ _appearance_apply() {
     # --- k9s ---------------------------------------------------------------
     export K9S_SKIN="catppuccin-${flavour}"
 
+    # --- kubecolor ---------------------------------------------------------
+    # kubecolor has configurable themes but cannot detect the terminal's
+    # appearance. Override its semantic base colours here; the more specific
+    # status, data and command colours inherit from these values.
+    if [[ $mode == light ]]; then
+        export KUBECOLOR_PRESET=light
+        export KUBECOLOR_THEME_BASE_DANGER='#d20f39'       # Latte red
+        export KUBECOLOR_THEME_BASE_INFO='#4c4f69'         # Latte text
+        export KUBECOLOR_THEME_BASE_MUTED='#9ca0b0:italic' # Latte overlay0
+        export KUBECOLOR_THEME_BASE_PRIMARY='#8839ef'      # Latte mauve
+        export KUBECOLOR_THEME_BASE_SECONDARY='#179299'    # Latte teal
+        export KUBECOLOR_THEME_BASE_SUCCESS='#40a02b'      # Latte green
+        export KUBECOLOR_THEME_BASE_WARNING='#df8e1d'      # Latte yellow
+        export KUBECOLOR_THEME_DEFAULT='#40a02b'
+        export KUBECOLOR_THEME_TABLE_HEADER='#4c4f69:bold:underline'
+    else
+        export KUBECOLOR_PRESET=dark
+        export KUBECOLOR_THEME_BASE_DANGER='#f38ba8'       # Mocha red
+        export KUBECOLOR_THEME_BASE_INFO='#cdd6f4'         # Mocha text
+        export KUBECOLOR_THEME_BASE_MUTED='#6c7086:italic' # Mocha overlay0
+        export KUBECOLOR_THEME_BASE_PRIMARY='#cba6f7'      # Mocha mauve
+        export KUBECOLOR_THEME_BASE_SECONDARY='#94e2d5'    # Mocha teal
+        export KUBECOLOR_THEME_BASE_SUCCESS='#a6e3a1'      # Mocha green
+        export KUBECOLOR_THEME_BASE_WARNING='#f9e2af'      # Mocha yellow
+        export KUBECOLOR_THEME_DEFAULT='#a6e3a1'
+        export KUBECOLOR_THEME_TABLE_HEADER='#cdd6f4:bold:underline'
+    fi
+
     # --- fzf ---------------------------------------------------------------
     # bg and fg stay at the terminal default (-1) on purpose: it keeps fzf
     # transparent to whatever the terminal is actually painting, so the popup
