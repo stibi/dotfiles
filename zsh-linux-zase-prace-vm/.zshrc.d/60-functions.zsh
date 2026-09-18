@@ -1,5 +1,14 @@
 # Shell functions.
 
+# Reduce Ansible's routine output for the rest of the current shell session.
+ansible-quiet() {
+    export ANSIBLE_ACTION_WARNINGS=false
+    export ANSIBLE_DISPLAY_OK_HOSTS=false
+    export ANSIBLE_DISPLAY_SKIPPED_HOSTS=false
+
+    printf '%s\n' 'Ansible quiet mode enabled for this shell.'
+}
+
 # certexp <domain> — show issuer/validity of a TLS cert with a colour-coded
 # warning as expiry approaches. Linux port of the macOS version (plain
 # `date -d` here instead of gdate).
