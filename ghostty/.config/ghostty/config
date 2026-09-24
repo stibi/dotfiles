@@ -12,9 +12,6 @@ cursor-style-blink = false
 unfocused-split-fill = ffffff
 unfocused-split-opacity = 0.9
 
-selection-background = 464c91
-selection-foreground = ffffff
-
 copy-on-select = clipboard
 quit-after-last-window-closed = true
 
