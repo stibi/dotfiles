@@ -22,6 +22,12 @@ auto_switch = true
 light_name = "catppuccin-latte"
 dark_name = "catppuccin"
 
+[theme.custom.light]
+active_row_bg = "#bcc0cc"
+
+[theme.custom.dark]
+active_row_bg = "#45475a"
+
 [keys]
 # prefix = "ctrl+a"
 prefix = "`"
