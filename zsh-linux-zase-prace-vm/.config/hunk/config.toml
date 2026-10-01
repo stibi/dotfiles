@@ -1,22 +1,10 @@
 # hunk (hunk.dev) — https://github.com/modem-dev/hunk
 #
-# theme is deliberately "auto" here even though the palette we actually want is
-# Catppuccin. hunk supports automatic light/dark detection (it queries OSC 11,
-# computes WCAG luminance and picks at a 0.5 threshold) but it has NO light/dark
-# theme *pairing*: "auto" resolves to hunk's own built-in defaults, not to a
-# configured catppuccin-latte/catppuccin-mocha pair.
-#
-# So Catppuccin is supplied by ~/.local/bin/hunk-catppuccin. The interactive
-# shell function passes its cached appearance to that launcher, while direct
-# callers such as the Herdr plugin let it query their PTY. This value remains
-# the fallback for anything that bypasses both launch paths.
-#
-# Note hunk's detection is startup-only. The resolved value is `initialThemeMode`
-# in its source, and hunk actively disables terminal mode 2031 (CSI ? 2031 l) so
-# unsolicited colour-scheme notifications cannot land in its key input. Since
-# hunk is launched per-diff rather than left running, each invocation re-detects
-# and the gap only shows if the OS theme flips mid-review.
-theme = "auto"
+# Hunk 0.23's terminal theme inherits the terminal foreground, background and
+# ANSI palette, then repaints when the terminal reports an appearance change.
+# Ghostty supplies Catppuccin Latte/Mocha through that palette, so console and
+# Herdr-launched reviews no longer need a separate theme-detection wrapper.
+theme = "terminal"
 
 # Layout, not appearance: auto | split | stack.
 mode = "auto"

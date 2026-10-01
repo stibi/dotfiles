@@ -240,16 +240,6 @@ else
     _appearance_apply dark
 fi
 
-# hunk supports automatic light/dark detection, but cannot pair two chosen
-# themes. The standalone launcher also works for non-shell callers such as the
-# Herdr plugin; pass it this shell's cached result to avoid a second query.
-if (( $+commands[hunk] )) && [[ -x $HOME/.local/bin/hunk-catppuccin ]]; then
-    hunk() {
-        HUNK_THEME_APPEARANCE=${TERM_APPEARANCE:-dark} \
-            command "$HOME/.local/bin/hunk-catppuccin" "$@"
-    }
-fi
-
 # Codex's `tui.theme` controls syntax highlighting (including fenced code),
 # but a selection made with `/theme` is persisted as one fixed theme. Supply
 # the matching Catppuccin flavour per launch instead, without rewriting

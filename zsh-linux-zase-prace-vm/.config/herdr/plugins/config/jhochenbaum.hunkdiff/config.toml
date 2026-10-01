@@ -3,4 +3,4 @@ placement = "tab"
 reuse_pane = true
 
 [hunk]
-bin = "/home/stibi/.local/bin/hunk-catppuccin"
+bin = "/home/stibi/.local/bin/hunk"
