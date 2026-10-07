@@ -5,6 +5,7 @@
 typeset -U path PATH
 
 path=(
+    "${KREW_ROOT:-$HOME/.krew}/bin"
     "$HOME/.local/bin"
     "$HOME/bin"
     $path
