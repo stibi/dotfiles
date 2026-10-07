@@ -1,0 +1,5 @@
+# Keep the pod's assigned node visible in the regular table. Sofka includes
+# NODE in its curated pod view already, but normally shows it only in wide mode.
+[[views."v1/pods".columns]]
+name = "NODE"
+builtin = "NODE"
