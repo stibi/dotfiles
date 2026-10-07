@@ -1,5 +1,21 @@
-# Keep the pod's assigned node visible in the regular table. Sofka includes
-# NODE in its curated pod view already, but normally shows it only in wide mode.
-[[views."v1/pods".columns]]
-name = "NODE"
-builtin = "NODE"
+# Match the regular pod view from k9s 0.51.0 as closely as Sofka supports.
+# Sofka adds NAMESPACE automatically in all-namespaces mode. K9s's PF column is
+# represented by Sofka's port-forward marker in NAME, and its conditional VS
+# vulnerability column has no Sofka equivalent.
+[views."v1/pods"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "READY", builtin = "READY" },
+    { name = "STATUS", builtin = "STATUS" },
+    { name = "RESTARTS", builtin = "RESTARTS" },
+    { name = "CPU", metric = "cpu" },
+    { name = "%CPU/R", metric = "cpu-request-utilization" },
+    { name = "%CPU/L", metric = "cpu-limit-utilization" },
+    { name = "MEM", metric = "memory" },
+    { name = "%MEM/R", metric = "memory-request-utilization" },
+    { name = "%MEM/L", metric = "memory-limit-utilization" },
+    { name = "IP", builtin = "IP" },
+    { name = "NODE", builtin = "NODE" },
+    { name = "AGE", builtin = "AGE" },
+]
