@@ -19,3 +19,135 @@ columns = [
     { name = "NODE", builtin = "NODE" },
     { name = "AGE", builtin = "AGE" },
 ]
+
+# Match the normal (non-wide) k9s 0.51.0 controller views. The conditional VS
+# vulnerability column is a k9s feature and has no Sofka equivalent.
+[views."apps/v1/deployments"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "READY", builtin = "READY" },
+    { name = "UP-TO-DATE", builtin = "UP-TO-DATE" },
+    { name = "AVAILABLE", builtin = "AVAILABLE" },
+    { name = "AGE", builtin = "AGE" },
+]
+
+[views."apps/v1/replicasets"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "DESIRED", builtin = "DESIRED" },
+    { name = "CURRENT", builtin = "CURRENT" },
+    { name = "READY", builtin = "READY" },
+    { name = "AGE", builtin = "AGE" },
+]
+
+[views."apps/v1/statefulsets"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "READY", builtin = "READY" },
+    { name = "SERVICE", path = "/spec/serviceName" },
+    { name = "AGE", builtin = "AGE" },
+]
+
+[views."apps/v1/daemonsets"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "DESIRED", builtin = "DESIRED" },
+    { name = "CURRENT", builtin = "CURRENT" },
+    { name = "READY", builtin = "READY" },
+    { name = "UP-TO-DATE", path = "/status/updatedNumberScheduled", type = "number" },
+    { name = "AVAILABLE", builtin = "AVAILABLE" },
+    { name = "AGE", builtin = "AGE" },
+]
+
+# K9s reports allocatable and capacity GPU resources for the first known
+# vendor. Fallback paths cover its stock dedicated-GPU vendor list; shared GPU
+# resources currently have one stock resource name.
+[views."v1/nodes"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "STATUS", builtin = "STATUS" },
+    { name = "ROLE", builtin = "ROLES" },
+    { name = "TAINTS", builtin = "TAINTS" },
+    { name = "VERSION", builtin = "VERSION" },
+    { name = "PODS", metric = "node-pods" },
+    { name = "CPU", metric = "cpu" },
+    { name = "CPU/A", path = "/status/allocatable/cpu", type = "quantity", format = "cpu" },
+    { name = "%CPU", metric = "node-cpu-utilization" },
+    { name = "MEM", metric = "memory" },
+    { name = "MEM/A", path = "/status/allocatable/memory", type = "quantity", format = "memory" },
+    { name = "%MEM", metric = "node-memory-utilization" },
+    { name = "GPU/A", path = [
+        "/status/allocatable/nvidia.com~1gpu",
+        "/status/allocatable/amd.com~1gpu",
+        "/status/allocatable/gpu.intel.com~1i915",
+    ], type = "quantity" },
+    { name = "GPU/C", path = [
+        "/status/capacity/nvidia.com~1gpu",
+        "/status/capacity/amd.com~1gpu",
+        "/status/capacity/gpu.intel.com~1i915",
+    ], type = "quantity" },
+    { name = "SH-GPU/A", path = "/status/allocatable/nvidia.com~1gpu.shared", type = "quantity" },
+    { name = "SH-GPU/C", path = "/status/capacity/nvidia.com~1gpu.shared", type = "quantity" },
+    { name = "AGE", builtin = "AGE" },
+]
+
+# Sofka adds a derived STATUS to Jobs and CronJobs; k9s's normal tables do not.
+[views."batch/v1/jobs"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "COMPLETIONS", builtin = "COMPLETIONS" },
+    { name = "DURATION", builtin = "DURATION" },
+    { name = "AGE", builtin = "AGE" },
+]
+
+[views."batch/v1/cronjobs"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "SCHEDULE", builtin = "SCHEDULE" },
+    { name = "SUSPEND", builtin = "SUSPEND" },
+    { name = "ACTIVE", builtin = "ACTIVE" },
+    { name = "LAST_SCHEDULE", builtin = "LAST-SCHEDULE" },
+    { name = "AGE", builtin = "AGE" },
+]
+
+# K9s includes access modes and storage class in its normal PVC view.
+[views."v1/persistentvolumeclaims"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "STATUS", builtin = "STATUS" },
+    { name = "VOLUME", builtin = "VOLUME" },
+    { name = "CAPACITY", builtin = "CAPACITY" },
+    { name = "ACCESS MODES", path = "/spec/accessModes" },
+    { name = "STORAGECLASS", path = [
+        "/spec/storageClassName",
+        "/metadata/annotations/volume.beta.kubernetes.io~1storage-class",
+    ] },
+    { name = "AGE", builtin = "AGE" },
+]
+
+# CLAIM remains Sofka's built-in value. Unlike k9s it contains only the claim
+# name, not namespace/name; custom view columns cannot concatenate two fields.
+[views."v1/persistentvolumes"]
+replace = true
+columns = [
+    { name = "NAME", builtin = "NAME" },
+    { name = "CAPACITY", builtin = "CAPACITY" },
+    { name = "ACCESS MODES", path = "/spec/accessModes" },
+    { name = "RECLAIM POLICY", path = "/spec/persistentVolumeReclaimPolicy" },
+    { name = "STATUS", builtin = "STATUS" },
+    { name = "CLAIM", builtin = "CLAIM" },
+    { name = "STORAGECLASS", path = [
+        "/spec/storageClassName",
+        "/metadata/annotations/volume.beta.kubernetes.io~1storage-class",
+    ] },
+    { name = "REASON", path = "/status/reason", default = "" },
+    { name = "AGE", builtin = "AGE" },
+]
