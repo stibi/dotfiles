@@ -142,3 +142,8 @@
     cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
 [difftool "hunk"]
 	cmd = hunk difftool \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+
+# Machine-specific settings such as credential helpers live outside this
+# portable, stowed file and are provisioned by the host's Ansible inventory.
+[include]
+	path = ~/.gitconfig.local
