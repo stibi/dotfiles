@@ -21,16 +21,60 @@
 
 typeset -g TERM_APPEARANCE=dark
 typeset -g _appearance_result=
+typeset -g _appearance_reply=
+
+# Everything read from the tty that is not a terminal reply. The query shares
+# the input stream with the keyboard, so anything typed while the shell starts
+# — by you, or by herdr typing `claude --resume …` into a restored pane — is
+# read here too. Throwing it away silently drops that command; instead it is
+# collected and replayed into the line editor at the first prompt.
+typeset -g _appearance_typeahead=
 
 # A query whose reply arrives after we stop reading leaves bytes in the input
-# buffer, which then land in the next command line. Always drain.
+# buffer, which then land in the next command line. Always drain — into the
+# typeahead buffer, where late replies are filtered out before the replay.
 _appearance_drain() {
-    while read -r -s -t 0 -k 1 -u $1 2>/dev/null; do :; done
+    local c
+    while read -r -s -t 0 -k 1 -u $1 c 2>/dev/null; do
+        _appearance_typeahead+=$c
+    done
+}
+
+# Read one reply that starts with $2 and ends with byte $3, for at most 0.3s in
+# total. Byte-at-a-time rather than `read -d`, because a delimiter read would
+# stop at the first matching byte of *typeahead*, not of the reply. Bytes
+# before the reply are typeahead. Sets _appearance_reply to the reply body.
+_appearance_read_reply() {
+    local fd=$1 start=$2 end=$3 c buf=
+    local -F deadline=$(( EPOCHREALTIME + 0.3 )) left
+    _appearance_reply=
+    while (( (left = deadline - EPOCHREALTIME) > 0 )); do
+        read -r -s -t $left -k 1 -u $fd c 2>/dev/null || break
+        buf+=$c
+        [[ $buf == *"$start"* && $c == $end ]] || continue
+        _appearance_typeahead+=${buf%%"$start"*}
+        _appearance_reply=${buf#*"$start"}
+        return 0
+    done
+    _appearance_typeahead+=$buf
+    return 1
+}
+
+# Strip replies that arrived too late to be matched, then hand the rest to ZLE
+# as if it were typed: a trailing CR still runs the command.
+_appearance_replay_typeahead() {
+    add-zle-hook-widget -d zle-line-init _appearance_replay_typeahead
+    setopt localoptions extendedglob
+    local keys=${_appearance_typeahead//$'\e[?997;'<->n/}
+    keys=${keys//$'\e]11;'[^$'\a'$'\e']#($'\a'|$'\e\\')/}
+    _appearance_typeahead=
+    [[ -n $keys ]] && zle -U "$keys"
 }
 
 _appearance_detect() {
     _appearance_result=
     [[ -o interactive ]] || return 1
+    zmodload -F zsh/datetime p:EPOCHREALTIME 2>/dev/null || return 1
 
     local ttyfd
     # Braces matter: `exec ... 2>/dev/null` would redirect the *shell's* stderr
@@ -42,27 +86,30 @@ _appearance_detect() {
         { exec {ttyfd}>&- } 2>/dev/null
         return 1
     fi
-    stty -echo <&$ttyfd 2>/dev/null
+    # -icanon: the byte-wise reads below get each byte as it arrives. In
+    # canonical mode the kernel holds input back until a newline, and a
+    # terminal reply never ends in one.
+    stty -echo -icanon <&$ttyfd 2>/dev/null
 
     # --- 1. semantic query ------------------------------------------------
-    # The reply ends in 'n', which makes it a safe read delimiter.
-    reply=
+    # Reply: ESC [ ? 997 ; 1 n (dark) or ; 2 n (light).
     print -nu $ttyfd $'\e[?996n'
-    read -r -s -t 0.3 -d n -u $ttyfd reply 2>/dev/null
+    _appearance_read_reply $ttyfd $'\e[?997;' n
+    reply=$_appearance_reply
     _appearance_drain $ttyfd
 
     case $reply in
-        *997\;1*) _appearance_result=dark  ;;
-        *997\;2*) _appearance_result=light ;;
+        1n) _appearance_result=dark  ;;
+        2n) _appearance_result=light ;;
     esac
 
     # --- 2. OSC 11 background colour --------------------------------------
     # Queried BEL-terminated so a compliant reply is BEL-terminated too.
     # Reply looks like: ESC ] 11 ; rgb:1e1e/1e1e/2e2e BEL
     if [[ -z $_appearance_result ]]; then
-        reply=
         print -nu $ttyfd $'\e]11;?\a'
-        read -r -s -t 0.3 -d $'\a' -u $ttyfd reply 2>/dev/null
+        _appearance_read_reply $ttyfd $'\e]11;' $'\a'
+        reply=$_appearance_reply
         _appearance_drain $ttyfd
 
         if [[ $reply == *rgb:* ]]; then
@@ -79,6 +126,11 @@ _appearance_detect() {
 
     stty "$old" <&$ttyfd 2>/dev/null
     { exec {ttyfd}>&- } 2>/dev/null
+
+    if [[ -n $_appearance_typeahead ]]; then
+        autoload -Uz add-zle-hook-widget
+        add-zle-hook-widget zle-line-init _appearance_replay_typeahead
+    fi
 
     [[ -n $_appearance_result ]]
 }
